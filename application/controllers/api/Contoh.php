@@ -19,9 +19,21 @@ class Contoh extends MY_Controller {
 	}
 
 	public function decode_get(){
-		$decoded = $this->jwt()->decode("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjYxNDc2MzI0MTk4OSIsInVzZXJuYW1lIjoiYmViZWtfYmFrYXIiLCJpYXQiOjE1MTU5MzY2NDksImV4cCI6MTUxNTk1NDY0OX0.YQ_FdJwZghaavG1tOUSkxqHtDXwLSsX7cdXQwSeNre8");
+		try{
+			$decoded = $this->jwt()->decode("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjYxNDc2MzI0MTk4OSIsInVzZXJuYW1lIjoiYmViZWtfYmFrYXIiLCJpYXQiOjE1MTU5MzY2NDksImV4cCI6MTUxNTk1NDY0OX0.YQ_FdJwZghaavG1tOUSkxqHtDXwLSsX7cdXQwSeNre8");
 
-		$this->set_response($decoded, REST_Controller::HTTP_OK);
+			$this->set_response($decoded, REST_Controller::HTTP_OK);
+		}
+		catch(\Exception $e){
+			$this->set_response([
+				"meta"=>[
+					'code'=>401,
+					'status'=>'Failed',
+					'message'=>'Unauthorized'
+				]
+			], REST_Controller::HTTP_UNAUTHORIZED);
+		}
+		
 	}
 	public function header_get(){
 		$this->set_response($this->input->get_request_header('Authorization'), REST_Controller::HTTP_OK);

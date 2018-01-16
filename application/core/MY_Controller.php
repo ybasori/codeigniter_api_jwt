@@ -1,6 +1,5 @@
 <?php
 require_once APPPATH . '/libraries/REST_Controller.php';
-require_once APPPATH . '/libraries/jwt/JWT.php';
 use \Firebase\JWT\JWT;
 /**
 * 
